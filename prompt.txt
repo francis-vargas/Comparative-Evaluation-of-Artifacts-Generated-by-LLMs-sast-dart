@@ -1,0 +1,135 @@
+================================================================================
+PROMPT ÚNICO — GERAÇÃO DO ARTEFATO dart_sast
+(Usar este prompt identicamente no Claude, ChatGPT e Gemini)
+================================================================================
+
+Quero que você crie um artefato de software completo chamado dart_sast,
+uma ferramenta de SAST (Static Application Security Testing) para código
+Dart/Flutter.
+
+O artefato deve seguir os critérios de avaliação de artefatos científicos
+do SBRC 2026 (https://doc-artefatos.github.io/sbrc2026/), que atribui
+quatro selos:
+
+- SeloD (Disponibilidade): código público em repositório estável com
+  documentação mínima.
+- SeloF (Funcionalidade): ferramenta executável com lista de dependências,
+  instruções de instalação, execução e exemplo mínimo de uso.
+- SeloS (Sustentabilidade): código modularizado, organizado, legível,
+  com documentação descrevendo arquivos e funções.
+- SeloR (Reprodutibilidade): qualquer pessoa consegue reproduzir os
+  resultados a partir das instruções fornecidas.
+
+────────────────────────────────────────────────────────────────────────────────
+PARTE 1 — FERRAMENTA CLI
+────────────────────────────────────────────────────────────────────────────────
+
+Crie uma ferramenta CLI em Python chamada dart_sast que:
+
+1. Receba como argumento um arquivo .dart ou diretório contendo arquivos
+   .dart e pubspec.yaml.
+
+2. Detecte vulnerabilidades de segurança relevantes para a plataforma
+   Dart/Flutter. Como ponto de partida, considere pelo menos as seguintes
+   CWEs — mas sinta-se livre para identificar e adicionar outras que
+   julgar importantes para o ecossistema Dart/Flutter:
+
+   CWE-798  | Credenciais hardcoded
+   CWE-319  | Comunicação sem criptografia
+   CWE-327  | Algoritmo criptográfico fraco ou quebrado
+   CWE-338  | Geração de número pseudo-aleatório insegura
+   CWE-89   | SQL Injection
+   CWE-532  | Inserção de informação sensível em arquivo de log
+   CWE-215  | Inserção de informação sensível em código de depuração
+   CWE-312  | Armazenamento em texto claro de informação sensível
+   CWE-295  | Validação imprópria de certificado
+   CWE-22   | Path Traversal
+   CWE-926  | Exportação imprópria de componentes de aplicação Android
+   CWE-1104 | Uso de componente de terceiro não mantido
+   CWE-78   | OS Command Injection
+   CWE-918  | Server-Side Request Forgery (SSRF)
+   CWE-347  | Verificação imprópria de assinatura criptográfica
+   CWE-942  | Permissão de CORS muito ampla
+   CWE-598  | Uso do método GET com dados sensíveis
+   CWE-287  | Autenticação imprópria
+   CWE-209  | Geração de mensagem de erro com informação sensível
+   CWE-521  | Requisitos de senha fraca
+
+3. Defina a arquitetura e organização das regras da forma que julgar
+   mais adequada para sustentabilidade e facilidade de adição de novas
+   regras no futuro. Justifique sua escolha.
+
+4. Produza saída obrigatoriamente em console e JSON. Adicione outros
+   formatos que julgar úteis para integração com ferramentas de
+   segurança (ex: SARIF, DefectDojo, etc.) — a decisão é sua.
+
+5. Implemente flags de CLI que julgar necessárias para uso prático
+   em pipelines de CI/CD.
+
+────────────────────────────────────────────────────────────────────────────────
+PARTE 2 — ESTRUTURA DO PROJETO
+────────────────────────────────────────────────────────────────────────────────
+
+Organize o projeto de forma que seja:
+- Sustentável: fácil de manter, evoluir e receber contribuições externas
+- Extensível: simples adicionar novas regras ou formatos de saída
+- Reproduzível: qualquer pessoa consiga instalar e executar sem ambiguidade
+
+Inclua todos os arquivos necessários para um projeto open source completo
+(ex: LICENSE, README, .gitignore, configuração de pacote, etc.).
+Decida você mesmo a estrutura de diretórios e arquivos que melhor
+atende esses objetivos.
+
+────────────────────────────────────────────────────────────────────────────────
+PARTE 3 — DISTRIBUIÇÃO
+────────────────────────────────────────────────────────────────────────────────
+
+Considere formas de distribuição que maximizem a adoção da ferramenta.
+Implemente as que julgar mais relevantes para o público-alvo
+(desenvolvedores Dart/Flutter e equipes de segurança), como:
+- Pacote instalável (pip, etc.)
+- Imagem Docker
+- GitHub Action para uso em CI/CD de outros projetos
+- Outros que julgar adequados
+
+────────────────────────────────────────────────────────────────────────────────
+PARTE 4 — README.md
+────────────────────────────────────────────────────────────────────────────────
+
+O README.md deve conter obrigatoriamente (critérios SeloD e SeloF do
+SBRC 2026):
+
+1. Descrição do problema e motivação
+2. Lista de dependências e versões
+3. Instruções de instalação e execução
+4. Exemplos de uso
+5. Como executar os testes
+6. Estrutura do repositório
+7. Referências (OWASP, CWE, etc.)
+
+────────────────────────────────────────────────────────────────────────────────
+PARTE 5 — TESTES
+────────────────────────────────────────────────────────────────────────────────
+
+Crie testes automatizados cobrindo:
+
+1. Detecção positiva para cada regra implementada
+2. Não detecção em código limpo (falsos positivos)
+3. Pelo menos um arquivo de exemplo com vulnerabilidades intencionais
+   para demonstração e teste de integração
+
+────────────────────────────────────────────────────────────────────────────────
+OBSERVAÇÕES FINAIS
+────────────────────────────────────────────────────────────────────────────────
+
+- Todo o código deve ser funcional e executável sem modificações.
+- Justifique as decisões de arquitetura e design que tomar.
+- Não use dependências externas desnecessárias.
+- Use Python 3.9+.
+
+IMPORTANTE: Não faça perguntas de esclarecimento. Tome todas as decisões
+de design por conta própria, justifique-as brevemente no início da resposta
+e gere todos os arquivos imediatamente. Se houver ambiguidade, escolha a
+opção mais completa e profissional.
+
+================================================================================

@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dart_sast"
+version = "1.0.0"
+description = "Static Application Security Testing (SAST) for Dart/Flutter source code."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "dart_sast contributors" }]
+keywords = ["sast", "security", "dart", "flutter", "static-analysis", "cwe"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Security",
+    "Topic :: Software Development :: Quality Assurance",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4", "pytest-cov>=4.1"]
+
+[project.urls]
+Homepage = "https://github.com/example/dart_sast"
+Issues = "https://github.com/example/dart_sast/issues"
+
+[project.scripts]
+dart_sast = "dart_sast.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

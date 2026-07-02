@@ -1,0 +1,25 @@
+name: vulnerable_app
+description: A demo Flutter app used by dart_sast to showcase its detections.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: any
+  some_old_widget:
+    git:
+      url: https://github.com/example/some-old-widget.git
+  local_helper:
+    path: ../local_helper
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  test: ^1.24.0
+
+flutter:
+  uses-material-design: true

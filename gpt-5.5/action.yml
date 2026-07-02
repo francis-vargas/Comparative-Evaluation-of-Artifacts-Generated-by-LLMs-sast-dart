@@ -1,0 +1,28 @@
+name: dart_sast
+summary: Run dart_sast against Dart/Flutter code
+description: Lightweight SAST scanner for Dart and Flutter projects.
+inputs:
+  target:
+    description: File or directory to scan
+    required: false
+    default: .
+  format:
+    description: Output format: console, json or sarif
+    required: false
+    default: sarif
+  output:
+    description: Output file path
+    required: false
+    default: dart_sast.sarif
+  fail-on:
+    description: Severity threshold for failing the workflow
+    required: false
+    default: high
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        pip install .
+        dart_sast "${{ inputs.target }}" --format "${{ inputs.format }}" --output "${{ inputs.output }}" --fail-on "${{ inputs.fail-on }}"

@@ -1,0 +1,74 @@
+name: "dart_sast"
+description: "Static Application Security Testing (SAST) for Dart/Flutter source code."
+author: "dart_sast contributors"
+branding:
+  icon: "shield"
+  color: "red"
+
+inputs:
+  path:
+    description: "File or directory to scan."
+    required: false
+    default: "."
+  format:
+    description: "Output format: console, json, sarif, or all."
+    required: false
+    default: "sarif"
+  fail-on:
+    description: "Minimum severity that fails the build (never, INFO, LOW, MEDIUM, HIGH, CRITICAL)."
+    required: false
+    default: "HIGH"
+  output:
+    description: "Path to write the report to."
+    required: false
+    default: "dart-sast-report.sarif"
+  exclude:
+    description: "Comma-separated list of glob patterns to exclude."
+    required: false
+    default: ""
+  rules:
+    description: "Comma-separated list of rule IDs to run exclusively."
+    required: false
+    default: ""
+  exclude-rules:
+    description: "Comma-separated list of rule IDs to skip."
+    required: false
+    default: ""
+
+outputs:
+  report-path:
+    description: "Path to the generated report file."
+    value: ${{ steps.run-scan.outputs.report-path }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    - name: Install dart_sast
+      shell: bash
+      run: pip install "dart_sast @ git+https://github.com/example/dart_sast.git"
+
+    - name: Run dart_sast
+      id: run-scan
+      shell: bash
+      run: |
+        ARGS=("${{ inputs.path }}" "--format" "${{ inputs.format }}" "--output" "${{ inputs.output }}" "--fail-on" "${{ inputs.fail-on }}")
+        if [ -n "${{ inputs.exclude }}" ]; then
+          IFS=',' read -ra PATTERNS <<< "${{ inputs.exclude }}"
+          for p in "${PATTERNS[@]}"; do ARGS+=("--exclude" "$p"); done
+        fi
+        if [ -n "${{ inputs.rules }}" ]; then
+          ARGS+=("--rules" "${{ inputs.rules }}")
+        fi
+        if [ -n "${{ inputs.exclude-rules }}" ]; then
+          ARGS+=("--exclude-rules" "${{ inputs.exclude-rules }}")
+        fi
+        echo "Running: dart_sast ${ARGS[*]}"
+        dart_sast "${ARGS[@]}"
+        STATUS=$?
+        echo "report-path=${{ inputs.output }}" >> "$GITHUB_OUTPUT"
+        exit $STATUS

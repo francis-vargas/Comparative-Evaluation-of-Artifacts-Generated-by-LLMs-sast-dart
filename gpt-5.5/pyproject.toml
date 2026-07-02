@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dart-sast"
+version = "0.1.0"
+description = "Lightweight SAST scanner for Dart and Flutter projects"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{name = "dart_sast contributors"}]
+keywords = ["sast", "dart", "flutter", "security", "cwe", "sarif"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Security",
+  "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest==8.2.2"]
+
+[project.scripts]
+dart_sast = "dart_sast.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["dart_sast*"]

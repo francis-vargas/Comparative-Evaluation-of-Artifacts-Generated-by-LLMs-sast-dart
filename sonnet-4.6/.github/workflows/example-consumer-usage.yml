@@ -1,0 +1,27 @@
+name: "Example: use dart_sast in another project"
+
+on:
+  workflow_dispatch:
+
+# This workflow is NOT run automatically by this repository; it is here as
+# a copy-pasteable example for teams that want to add dart_sast to their
+# own Dart/Flutter project's CI pipeline.
+
+jobs:
+  sast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run dart_sast
+        uses: example/dart_sast@main
+        with:
+          path: "."
+          format: sarif
+          output: dart-sast-report.sarif
+          fail-on: HIGH
+
+      - name: Upload SARIF to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: dart-sast-report.sarif
