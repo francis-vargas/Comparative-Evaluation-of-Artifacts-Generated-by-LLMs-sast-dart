@@ -1,0 +1,25 @@
+[project]
+name = "dart_sast"
+version = "0.1.0"
+description = "SAST tool for Dart/Flutter applications"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = []
+license = {text = "MIT"}
+authors = [
+    {name = "Grok", email = "grok@x.ai"},
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Security",
+    "Topic :: Software Development :: Quality Assurance",
+]
+
+[project.scripts]
+dart-sast = "dart_sast.cli:main"
+
+[tool.setuptools]
+packages = ["dart_sast"]
+package-dir = {"" = "src"}

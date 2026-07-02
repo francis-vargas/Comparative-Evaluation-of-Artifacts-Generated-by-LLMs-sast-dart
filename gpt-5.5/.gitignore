@@ -11,3 +11,4 @@ coverage.xml
 htmlcov/
 findings*.json
 findings*.sarif
+*:Zone.Identifier
