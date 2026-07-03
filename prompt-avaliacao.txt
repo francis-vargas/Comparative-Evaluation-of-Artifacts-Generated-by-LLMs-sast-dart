@@ -1,0 +1,228 @@
+# PROMPT ÚNICO — AVALIAÇÃO REPRODUTÍVEL DE ARTEFATOS SAST DART
+
+================================================================================
+CONTEXTO E OBJETIVO
+================================================================================
+
+Você é um avaliador técnico de artefatos científicos para a conferência SBRC 2026.
+Sua tarefa é avaliar 4 artefatos de software (ferramentas SAST para Dart/Flutter)
+gerados por diferentes LLMs, executando os testes de cada um e produzindo um
+relatório comparativo completo.
+
+REPOSITÓRIO PRINCIPAL:
+https://github.com/francis-vargas/Comparative-Evaluation-of-Artifacts-Generated-by-LLMs-sast-dart
+
+ARTEFATOS A AVALIAR (4 versões independentes):
+- Versão A (Gemini 3.5 Flash): https://github.com/francis-vargas/Comparative-Evaluation-of-Artifacts-Generated-by-LLMs-sast-dart/tree/main/gemini-3.5-flash-aistudio
+- Versão B (GPT-5.5): https://github.com/francis-vargas/Comparative-Evaluation-of-Artifacts-Generated-by-LLMs-sast-dart/tree/main/gpt-5.5
+- Versão C (Grok Fast): https://github.com/francis-vargas/Comparative-Evaluation-of-Artifacts-Generated-by-LLMs-sast-dart/tree/main/grok-fast
+- Versão D (Sonnet 4.6): https://github.com/francis-vargas/Comparative-Evaluation-of-Artifacts-Generated-by-LLMs-sast-dart/tree/main/sonnet-4.6
+
+================================================================================
+INSTRUÇÕES CRÍTICAS — NÃO ALUCINE
+================================================================================
+
+⚠️  REGRAS OBRIGATÓRIAS:
+
+1. EXECUTE OS TESTES DE VERDADE: Não invente resultados. Se não conseguir executar
+   um teste, documente o erro real. Se o teste passar, copie o output exato.
+
+2. DOCUMENTE CADA PASSO: Para cada versão, registre:
+   - Comando exato executado
+   - Output completo do comando
+   - Resultado (passou/falhou/erro)
+   - Tempo de execução (se disponível)
+
+3. SEJA HONESTO SOBRE LIMITAÇÕES: Se você não tem capacidade de executar código,
+   declare isso explicitamente e avalie apenas aspectos estáticos (código, README,
+   estrutura). NÃO INVENTE resultados de execução.
+
+4. USE EVIDÊNCIAS: Toda afirmação sobre funcionalidade deve ser suportada por:
+   - Output de teste executado, OU
+   - Análise estática do código com citação de arquivo/linha
+
+================================================================================
+PARTE 1 — EXECUÇÃO DE TESTES (OBRIGATÓRIO)
+================================================================================
+
+Para CADA uma das 4 versões, execute os seguintes passos:
+
+### Passo 1: Clone o repositório
+```bash
+git clone https://github.com/francis-vargas/Comparative-Evaluation-of-Artifacts-Generated-by-LLMs-sast-dart.git
+cd Comparative-Evaluation-of-Artifacts-Generated-by-LLMs-sast-dart
+
+Passo 2: Para cada versão (gemini, gpt, grok, sonnet):
+
+# Entre no diretório da versão
+cd <nome-da-versao>
+
+# Instale dependências (se houver requirements.txt ou pyproject.toml)
+pip install -e .  # ou pip install -r requirements.txt
+
+# Execute os testes
+# Para unittest:
+python3 -m unittest discover -s tests -v
+
+# Para pytest:
+pytest tests/ -v
+
+# Documente o output COMPLETO
+
+Passo 3: Teste a CLI manualmente
+
+# Teste com arquivo de exemplo (se existir)
+dart_sast tests/fixtures/vulnerable.dart
+
+# Teste com diretório
+dart_sast tests/fixtures/
+
+# Teste formatos de saída
+dart_sast tests/fixtures/ --format json
+dart_sast tests/fixtures/ --format sarif
+
+Passo 4: Verifique a estrutura do projeto
+
+# Liste todos os arquivos
+find . -type f | grep -v __pycache__ | sort
+
+# Verifique presença de arquivos obrigatórios
+ls -la README.md LICENSE Dockerfile pyproject.toml action.yml 2>/dev/null
+
+
+PARTE 2 — AVALIAÇÃO DOS SELOS SBRC 2026
+Para cada versão, avalie os 4 selos conforme os requisitos documentados na url https://doc-artefatos.github.io/sbrc2026/revinstrucoes.html :
+SeloD (Disponibilidade)
+Repositório público acessível?
+README.md presente e completo?
+LICENSE presente?
+Documentação mínima adequada?
+SeloF (Funcionalidade)
+Ferramenta instalável (pip/docker)?
+Lista de dependências clara?
+Instruções de instalação no README?
+Exemplo mínimo de uso funcional?
+CLI executa sem erros?
+SeloS (Sustentabilidade)
+Código modularizado?
+Organização clara de diretórios?
+Código legível e comentado?
+Documentação de funções/módulos?
+Fácil adicionar novas regras?
+SeloR (Reprodutibilidade)
+Testes executam sem erros?
+Resultados dos testes são consistentes?
+Instruções permitem reprodução exata?
+Sem dependências ocultas ou ambiguidades?
+================================================================================
+PARTE 3 — ANÁLISE COMPARATIVA
+Após avaliar todas as versões, produza uma comparação considerando:
+Qualidade do código: Limpeza, modularidade, padrões
+Organização do projeto: Estrutura de diretórios, separação de responsabilidades
+Clareza da documentação: README, comentários, exemplos
+Facilidade de instalação: Quantos passos para instalar?
+Facilidade de execução: CLI intuitiva? Flags úteis?
+Cobertura de testes: Quantos testes? Cobrem todos os CWEs?
+Reprodutibilidade: Testes passam? Resultados consistentes?
+Sustentabilidade: Fácil manter e estender?
+Número de CWEs implementados: Quantos dos 20 solicitados?
+Distribuição: pip, Docker, GitHub Action?
+================================================================================
+PARTE 4 — FORMATO DE SAÍDA
+Produza um relatório em Markdown com a seguinte estrutura
+
+
+# Relatório de Avaliação de Artefatos SAST Dart
+
+## 1. Metodologia
+- Descrição do ambiente de teste (Python version, OS, etc.)
+- Comandos executados
+- Data da avaliação
+
+## 2. Resultados de Execução por Versão
+
+### 2.1 Versão A - Gemini 3.5 Flash
+**Comando executado**: [comando exato]
+**Output completo**:
+**Resultado**: [X/Y testes passaram]
+**Tempo**: [tempo de execução]
+
+### 2.2 Versão B - GPT-5.5
+[mesma estrutura]
+
+### 2.3 Versão C - Grok Fast
+[mesma estrutura]
+
+### 2.4 Versão D - Sonnet 4.6
+[mesma estrutura]
+
+## 3. Avaliação dos Selos SBRC 2026
+
+### 3.1 Versão A - Gemini 3.5 Flash
+- SeloD: [OBTIDO/NÃO OBTIDO] - Justificativa
+- SeloF: [OBTIDO/NÃO OBTIDO] - Justificativa
+- SeloS: [OBTIDO/NÃO OBTIDO] - Justificativa
+- SeloR: [OBTIDO/NÃO OBTIDO] - Justificativa
+
+### 3.2 Versão B - GPT-5.5
+[mesma estrutura]
+
+### 3.3 Versão C - Grok Fast
+[mesma estrutura]
+
+### 3.4 Versão D - Sonnet 4.6
+[mesma estrutura]
+
+## 4. Análise Comparativa
+
+### 4.1 Tabela Comparativa
+| Critério | Gemini | GPT | Grok | Sonnet |
+|----------|--------|-----|------|--------|
+| Testes passando | X/Y | X/Y | X/Y | X/Y |
+| CWEs implementados | X | X | X | X |
+| SeloD | ✅/❌ | ✅/❌ | ✅/❌ | ✅/❌ |
+| SeloF | ✅/❌ | ✅/❌ | ✅/❌ | ✅/❌ |
+| SeloS | ✅/❌ | ✅/❌ | ✅/❌ | ✅/❌ |
+| SeloR | ✅/❌ | ✅/❌ | ✅/❌ | ✅/❌ |
+
+### 4.2 Pontos Fortes por Versão
+- Gemini: [lista]
+- GPT: [lista]
+- Grok: [lista]
+- Sonnet: [lista]
+
+### 4.3 Limitações por Versão
+- Gemini: [lista]
+- GPT: [lista]
+- Grok: [lista]
+- Sonnet: [lista]
+
+### 4.4 Classificação Final
+1º Lugar: [versão] - Justificativa
+2º Lugar: [versão] - Justificativa
+3º Lugar: [versão] - Justificativa
+4º Lugar: [versão] - Justificativa
+
+## 5. Conclusão e Recomendações
+- Resumo executivo
+- Recomendações para cada versão
+- Lições aprendidas
+
+
+PARTE 5 — VERIFICAÇÃO FINAL
+Antes de entregar o relatório, verifique:
+Todos os 4 artefatos foram avaliados?
+Os testes foram executados de verdade (não inventados)?
+Os outputs dos testes estão documentados?
+Todos os 4 selos foram avaliados para cada versão?
+A comparação está completa e justa?
+A classificação final está justificada?
+O relatório está em Markdown formatado?
+================================================================================
+NOTAS FINAIS
+Se você NÃO tem capacidade de executar código, declare isso no início do relatório
+e avalie apenas aspectos estáticos (código, README, estrutura).
+Se algum teste falhar, documente o erro exato e tente diagnosticar o problema.
+Se algum artefato não tiver testes, documente isso e avalie apenas a funcionalidade
+manual da CLI.
+Seja objetivo e baseado em evidências. Evite opiniões subjetivas sem justificativa.
