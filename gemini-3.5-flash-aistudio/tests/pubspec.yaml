@@ -1,0 +1,9 @@
+name: vulnerable_project
+description: A sample project to test dart_sast rule detection on pubspec.yaml
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # CWE-1104: Use of unmaintained dependency
+  http_multi_server: ^2.2.0
+  flutter_local_auth_device: ^1.0.0

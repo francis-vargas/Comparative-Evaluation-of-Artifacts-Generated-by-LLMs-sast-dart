@@ -1,0 +1,6 @@
+{
+  "name": "dart_sast",
+  "description": "Static Application Security Testing (SAST) for Dart & Flutter code, compliant with SBRC 2026 scientific seals.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

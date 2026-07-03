@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.vulnerable">
+    <application>
+        <!-- CWE-926: Activity exported without permissions -->
+        <activity android:name=".VulnerableActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
+        <!-- Secure Activity: explicitly not exported -->
+        <activity android:name=".SecureActivity" android:exported="false" />
+    </application>
+</manifest>
